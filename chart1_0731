@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+</style>
+<html>
+<script src='https://d3js.org/d3.v5.min.js'></script>
+<body >
+ <svg width="600" height="600">
+    <g id="wrapper" transform="translate(40, 20)">
+    </g>
+  </svg>
+<script>
+
+//1.import data
+var myData = [
+  
+{DevType:'Back-end developer',Total:57.87},
+{DevType:'Full-stack developer',Total:8.02},
+{DevType:'Front-end developer',Total:5.9},
+{DevType:'Mobile developer',Total:4.29},
+{DevType:'Student',Total:3.58},
+{DevType:'Desktop or enterprise applications developer',Total:3.15},
+{DevType:'Designer',Total:2.92},
+{DevType:'Data or business analyst',Total:2.79},
+{DevType:'Data scientist or machine learning specialist',Total:2.4},
+{DevType:'DevOps specialist',Total:1.37},
+{DevType:'Database administrator',Total:1.33},
+{DevType:'C-suite executive (CEO, CTO, etc.)',Total:1.30},
+{DevType:'Embedded applications or devices developer',Total:1.29},
+{DevType:'Engineering manager',Total:0.99},
+{DevType:'Educator or academic researcher',Total:0.86},
+{DevType:'QA or test developer',Total:0.68},
+{DevType:'Game or graphics developer',Total:0.63},
+{DevType:'System administrator',Total:0.33},
+{DevType:'Product manager',Total:0.2},
+{DevType:'Marketing or sales professional',Total:0.1},
+
+
+];
+//2.set up var
+
+var margin = {top:20,right:55,bottom:15,left:250},
+    width = 1000-margin.left-margin.right,
+    height = 500-margin.top-margin.bottom;
+
+var svg=d3.select("body").selectAll("svg")
+          .attr("width",width+margin.left + margin.right)
+          .attr("height",height+margin.left + margin.right)
+          .append("g")
+          .attr("transform","translate("+(margin.left)+","+margin.top+")");
+
+//3.set up x y scales
+
+var 
+x = d3.scaleLinear().domain([0,60]).range([0,width]);
+y= d3.scaleBand()
+  .domain(['Back-end developer',
+'Full-stack developer',
+'Front-end developer',
+'Mobile developer',
+'Student',
+'Desktop or enterprise applications developer',
+'Designer',
+'Data or business analyst',
+'Data scientist or machine learning specialist',
+'DevOps specialist',
+'Database administrator',
+'C-suite executive (CEO, CTO, etc.)',
+'Embedded applications or devices developer',
+'Engineering manager',
+'Educator or academic researcher',
+'QA or test developer',
+'Game or graphics developer',
+'System administrator',
+'Product manager',
+'Marketing or sales professional'])
+  .range([0,height])
+  .paddingInner(0.1);
+
+
+
+//4.set up x y axis
+var xAxis = d3.axisBottom(x);
+var yAxis = d3.axisLeft(y);
+
+//5.add axes
+
+var gx=svg.append("g")
+       .attr("transform","translate(0,"+height+")")
+       .call(xAxis)
+      .append("text")
+       .attr('x',width)
+       .attr("y",-5)
+       .attr("fill","black")
+       .style("text-anchor","end")
+       .text("count%")
+
+
+
+
+var gy=svg.append("g").call(yAxis)
+     .append("text")
+       .attr('x',6)
+       .attr("y",-3)
+       .attr("fill","black")
+       .style("text-anchor","end")
+       .text("Job title")
+
+
+
+d3.select("body").selectAll("svg")
+  .attr("width",width+margin.left + margin.right)
+  .attr("height",height+margin.left + margin.right)
+  .append("g")
+  .attr("transform","translate("+(margin.left)+","+margin.top+")")
+
+  .selectAll('g')
+  .data(myData)
+  .enter()
+  .append('rect')
+
+  .attr('y', function(d) {
+    return y(d.DevType);
+  })
+  .attr('height', y.bandwidth())
+  .attr('width', function(d) {
+    return x(d.Total);
+  })
+  .attr('fill','#69b3a2')
+  ;
+
+
+
+
+
+
+  svg.append(g)
+  .append("text").text("try it")
+  .attr('y',function(d){return y(d.DevType)})
+  .attr('x',function(d){return x(d.Total)})
+  .attr("fill", "red");
+
+
+
+
+
+</script>
+</body>
+</html>
+
+
+
